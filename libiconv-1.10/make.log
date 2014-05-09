@@ -1,0 +1,59 @@
+builddir="`pwd`"; cd libcharset && /Applications/Xcode.app/Contents/Developer/usr/bin/make all && /Applications/Xcode.app/Contents/Developer/usr/bin/make install-lib libdir="$builddir/lib" includedir="$builddir/lib"
+if [ ! -d include ] ; then mkdir include ; fi
+cp ./include/libcharset.h.in include/libcharset.h
+if [ ! -d include ] ; then mkdir include ; fi
+cp ./include/localcharset.h.in include/localcharset.h
+cd lib && /Applications/Xcode.app/Contents/Developer/usr/bin/make all
+/bin/sh ../libtool --mode=compile gcc -I. -I. -I.. -I./.. -I../include -g -O2  -DLIBDIR=\"/usr/local/lib\" -DENABLE_RELOCATABLE=1 -DIN_LIBRARY -DINSTALLDIR=\"/usr/local/lib\" -DNO_XMALLOC -Dset_relocation_prefix=libcharset_set_relocation_prefix -Drelocate=libcharset_relocate -DHAVE_CONFIG_H -c ./localcharset.c
+mkdir .libs
+chmod 777 .libs
+ gcc -I. -I. -I.. -I./.. -I../include -g -O2 -DLIBDIR=\"/usr/local/lib\" -DENABLE_RELOCATABLE=1 -DIN_LIBRARY -DINSTALLDIR=\"/usr/local/lib\" -DNO_XMALLOC -Dset_relocation_prefix=libcharset_set_relocation_prefix -Drelocate=libcharset_relocate -DHAVE_CONFIG_H -c ./localcharset.c  -fno-common -DPIC -o .libs/localcharset.o
+ gcc -I. -I. -I.. -I./.. -I../include -g -O2 -DLIBDIR=\"/usr/local/lib\" -DENABLE_RELOCATABLE=1 -DIN_LIBRARY -DINSTALLDIR=\"/usr/local/lib\" -DNO_XMALLOC -Dset_relocation_prefix=libcharset_set_relocation_prefix -Drelocate=libcharset_relocate -DHAVE_CONFIG_H -c ./localcharset.c -o localcharset.o >/dev/null 2>&1
+/bin/sh ../libtool --mode=compile gcc -I. -I. -I.. -I./.. -I../include -g -O2  -DLIBDIR=\"/usr/local/lib\" -DENABLE_RELOCATABLE=1 -DIN_LIBRARY -DINSTALLDIR=\"/usr/local/lib\" -DNO_XMALLOC -Dset_relocation_prefix=libcharset_set_relocation_prefix -Drelocate=libcharset_relocate -DHAVE_CONFIG_H -c ./relocatable.c
+ gcc -I. -I. -I.. -I./.. -I../include -g -O2 -DLIBDIR=\"/usr/local/lib\" -DENABLE_RELOCATABLE=1 -DIN_LIBRARY -DINSTALLDIR=\"/usr/local/lib\" -DNO_XMALLOC -Dset_relocation_prefix=libcharset_set_relocation_prefix -Drelocate=libcharset_relocate -DHAVE_CONFIG_H -c ./relocatable.c  -fno-common -DPIC -o .libs/relocatable.o
+ gcc -I. -I. -I.. -I./.. -I../include -g -O2 -DLIBDIR=\"/usr/local/lib\" -DENABLE_RELOCATABLE=1 -DIN_LIBRARY -DINSTALLDIR=\"/usr/local/lib\" -DNO_XMALLOC -Dset_relocation_prefix=libcharset_set_relocation_prefix -Drelocate=libcharset_relocate -DHAVE_CONFIG_H -c ./relocatable.c -o relocatable.o >/dev/null 2>&1
+/bin/sh ../libtool --mode=link gcc  -o libcharset.la -rpath /usr/local/lib -version-info 1:0:0 -no-undefined localcharset.lo relocatable.lo
+gcc -dynamiclib  -o .libs/libcharset.1.0.0.dylib  .libs/localcharset.o .libs/relocatable.o   -install_name  /usr/local/lib/libcharset.1.dylib -Wl,-compatibility_version -Wl,2 -Wl,-current_version -Wl,2.0
+(cd .libs && rm -f libcharset.1.dylib && ln -s libcharset.1.0.0.dylib libcharset.1.dylib)
+(cd .libs && rm -f libcharset.dylib && ln -s libcharset.1.0.0.dylib libcharset.dylib)
+ar cru .libs/libcharset.a  localcharset.o relocatable.o
+ranlib .libs/libcharset.a
+creating libcharset.la
+(cd .libs && rm -f libcharset.la && ln -s ../libcharset.la libcharset.la)
+/bin/sh ./config.charset 'i686-apple-darwin13.1.0' > t-charset.alias
+mv t-charset.alias charset.alias
+sed -e '/^#/d' -e 's/@''PACKAGE''@//g' ./ref-add.sin > t-ref-add.sed
+mv t-ref-add.sed ref-add.sed
+sed -e '/^#/d' -e 's/@''PACKAGE''@//g' ./ref-del.sin > t-ref-del.sed
+mv t-ref-del.sed ref-del.sed
+cd lib && /Applications/Xcode.app/Contents/Developer/usr/bin/make all
+make[2]: Nothing to be done for `all'.
+cd lib && /Applications/Xcode.app/Contents/Developer/usr/bin/make install-lib libdir='/Users/takako/rails_projects/sample_app/libiconv-1.10/lib' includedir='/Users/takako/rails_projects/sample_app/libiconv-1.10/lib'
+/bin/sh ../build-aux/mkinstalldirs /Users/takako/rails_projects/sample_app/libiconv-1.10/lib
+/bin/sh ../libtool --mode=install /usr/bin/install -c -m 644 libcharset.la /Users/takako/rails_projects/sample_app/libiconv-1.10/lib/libcharset.la
+/usr/bin/install -c -m 644 .libs/libcharset.1.0.0.dylib /Users/takako/rails_projects/sample_app/libiconv-1.10/lib/libcharset.1.0.0.dylib
+(cd /Users/takako/rails_projects/sample_app/libiconv-1.10/lib && { ln -s -f libcharset.1.0.0.dylib libcharset.1.dylib || { rm -f libcharset.1.dylib && ln -s libcharset.1.0.0.dylib libcharset.1.dylib; }; })
+(cd /Users/takako/rails_projects/sample_app/libiconv-1.10/lib && { ln -s -f libcharset.1.0.0.dylib libcharset.dylib || { rm -f libcharset.dylib && ln -s libcharset.1.0.0.dylib libcharset.dylib; }; })
+/usr/bin/install -c -m 644 .libs/libcharset.lai /Users/takako/rails_projects/sample_app/libiconv-1.10/lib/libcharset.la
+/usr/bin/install -c -m 644 .libs/libcharset.a /Users/takako/rails_projects/sample_app/libiconv-1.10/lib/libcharset.a
+ranlib /Users/takako/rails_projects/sample_app/libiconv-1.10/lib/libcharset.a
+chmod 644 /Users/takako/rails_projects/sample_app/libiconv-1.10/lib/libcharset.a
+test -f /Users/takako/rails_projects/sample_app/libiconv-1.10/lib/charset.alias && orig=/Users/takako/rails_projects/sample_app/libiconv-1.10/lib/charset.alias \
+	                                || orig=charset.alias; \
+	sed -f ref-add.sed $orig > /Users/takako/rails_projects/sample_app/libiconv-1.10/lib/t-charset.alias; \
+	/usr/bin/install -c -m 644 /Users/takako/rails_projects/sample_app/libiconv-1.10/lib/t-charset.alias /Users/takako/rails_projects/sample_app/libiconv-1.10/lib/charset.alias; \
+	rm -f /Users/takako/rails_projects/sample_app/libiconv-1.10/lib/t-charset.alias
+/bin/sh ./build-aux/mkinstalldirs /Users/takako/rails_projects/sample_app/libiconv-1.10/lib
+/usr/bin/install -c -m 644 include/libcharset.h /Users/takako/rails_projects/sample_app/libiconv-1.10/lib/libcharset.h
+/usr/bin/install -c -m 644 include/localcharset.h /Users/takako/rails_projects/sample_app/libiconv-1.10/lib/localcharset.h
+cd lib && /Applications/Xcode.app/Contents/Developer/usr/bin/make all
+/bin/sh ../libtool --mode=compile gcc -I. -I. -I../include -I./../include  -g -O2 -DLIBDIR=\"/usr/local/lib\" -DENABLE_RELOCATABLE=1 -DIN_LIBRARY -DINSTALLDIR=\"/usr/local/lib\" -DNO_XMALLOC -Dset_relocation_prefix=libiconv_set_relocation_prefix -Drelocate=libiconv_relocate -DHAVE_CONFIG_H -c ./iconv.c
+mkdir .libs
+chmod 777 .libs
+ gcc -I. -I. -I../include -I./../include -g -O2 -DLIBDIR=\"/usr/local/lib\" -DENABLE_RELOCATABLE=1 -DIN_LIBRARY -DINSTALLDIR=\"/usr/local/lib\" -DNO_XMALLOC -Dset_relocation_prefix=libiconv_set_relocation_prefix -Drelocate=libiconv_relocate -DHAVE_CONFIG_H -c ./iconv.c  -fno-common -DPIC -o .libs/iconv.o
+/bin/sh ../libtool --mode=compile gcc -I. -I. -I../include -I./../include  -g -O2 -DLIBDIR=\"/usr/local/lib\" -DENABLE_RELOCATABLE=1 -DIN_LIBRARY -DINSTALLDIR=\"/usr/local/lib\" -DNO_XMALLOC -Dset_relocation_prefix=libiconv_set_relocation_prefix -Drelocate=libiconv_relocate -DHAVE_CONFIG_H -c ./../libcharset/lib/localcharset.c
+ gcc -I. -I. -I../include -I./../include -g -O2 -DLIBDIR=\"/usr/local/lib\" -DENABLE_RELOCATABLE=1 -DIN_LIBRARY -DINSTALLDIR=\"/usr/local/lib\" -DNO_XMALLOC -Dset_relocation_prefix=libiconv_set_relocation_prefix -Drelocate=libiconv_relocate -DHAVE_CONFIG_H -c ./../libcharset/lib/localcharset.c  -fno-common -DPIC -o .libs/localcharset.o
+/bin/sh ../libtool --mode=compile gcc -I. -I. -I../include -I./../include  -g -O2 -DLIBDIR=\"/usr/local/lib\" -DENABLE_RELOCATABLE=1 -DIN_LIBRARY -DINSTALLDIR=\"/usr/local/lib\" -DNO_XMALLOC -Dset_relocation_prefix=libiconv_set_relocation_prefix -Drelocate=libiconv_relocate -DHAVE_CONFIG_H -c ./relocatable.c
+ gcc -I. -I. -I../include -I./../include -g -O2 -DLIBDIR=\"/usr/local/lib\" -DENABLE_RELOCATABLE=1 -DIN_LIBRARY -DINSTALLDIR=\"/usr/local/lib\" -DNO_XMALLOC -Dset_relocation_prefix=libiconv_set_relocation_prefix -Drelocate=libiconv_relocate -DHAVE_CONFIG_H -c ./relocatable.c  -fno-common -DPIC -o .libs/relocatable.o
+/bin/sh ../libtool --mode=link gcc  -o libiconv.la -rpath /usr/local/lib -version-info 5:0:3 -no-undefined iconv.lo localcharset.lo relocatable.lo
+gcc -dynamiclib  -o .libs/libiconv.2.3.0.dylib  .libs/iconv.o .libs/localcharset.o .libs/relocatable.o   -install_name  /usr/local/lib/libiconv.2.dylib -Wl,-compatibility_version -Wl,6 -Wl,-current_version -Wl,6.0
